@@ -6,9 +6,12 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Dice/>
+      <div className="mainDiv">
+        
         <Scorecard/>
+        <div className="diceContainer">
+          <Dice/>
+        </div>
       </div>
     );
   }
