@@ -11,7 +11,7 @@ export default class Die extends Component {
 
   rollDie() {
 
-    return this.setState({dieRoll: Math.ceil(Math.random() * 6)});
+    this.setState({dieRoll: Math.ceil(Math.random() * 6)});
   }
    
   render() {
