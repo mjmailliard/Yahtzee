@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Scorecard from './Components/Scorecard'
-import Die from './Components/Die'
+// import Die from './Components/Die'
 import Dice from './Components/Dice'
 import './App.css';
 
