@@ -1,4 +1,4 @@
-### Yahtzee game
+# Yahtzee game
 ## React
 
 Coding this from scratch, just because I thought it would be fun, 
