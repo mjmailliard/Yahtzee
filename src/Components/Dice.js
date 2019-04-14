@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react'
-// import Die from './Die'
-
+import React, { Component } from 'react'
+import Scorecard from './Scorecard';
 
 export default class Dice extends Component {
   constructor(props){
@@ -16,44 +15,37 @@ export default class Dice extends Component {
       die3Locked: false,
       die4Locked: false,
       die5Locked: false,
-
+      diceRoll: [],
     }
     
   }
 
 
-  rollDice() {
+
+  rollDice = async () => {
     if (this.state.die1Locked === false ) { 
-      this.setState({die1: Math.ceil(Math.random() * 6)})
+      await this.setState({die1: Math.ceil(Math.random() * 6)})
     }
     if (this.state.die2Locked === false ) { 
-    this.setState({die2: Math.ceil(Math.random() * 6)});
+      await this.setState({die2: Math.ceil(Math.random() * 6)});
     }
     if (this.state.die3Locked === false ) { 
-    this.setState({die3: Math.ceil(Math.random() * 6)});
+      await this.setState({die3: Math.ceil(Math.random() * 6)});
     }
     if (this.state.die4Locked === false ) { 
-    this.setState({die4: Math.ceil(Math.random() * 6)});
+      await this.setState({die4: Math.ceil(Math.random() * 6)});
     }
     if (this.state.die5Locked === false ) { 
-    this.setState({die5: Math.ceil(Math.random() * 6)});
+      await this.setState({die5: Math.ceil(Math.random() * 6)});
     }
-
+    this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
   }
 
   render() {
-    const diceArray = [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]
-    diceArray.sort()
-    let counts = {}
-    diceArray.forEach((x) => { counts[x] = (counts[x] || 0)+1; })
-    console.log('counts', counts)
-    let hint = 'default'
-    console.log('dice array', diceArray)
-    if (JSON.stringify(diceArray) === JSON.stringify([1,2,3,4,5]) || JSON.stringify(diceArray) === JSON.stringify([2,3,4,5,6])) {
-      hint = 'You have a large straight'
-    }
+
     return(
-      <Fragment>
+      <>
+        <div className="diceContainer">
         <div>
           <div className="dieSize">
             {this.state.die1}
@@ -88,10 +80,10 @@ export default class Dice extends Component {
         
         <button onClick={()=> this.rollDice()}> roll all </button>
         
-        {this.state.die1+this.state.die2+this.state.die3+this.state.die4+this.state.die5}<br/>
-        {diceArray}<br/>
-        {hint}
-      </Fragment>
+
+        </div>
+        <Scorecard roll={this.state.diceRoll}/>
+      </>
     )
   }
 }

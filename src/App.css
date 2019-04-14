@@ -10,11 +10,11 @@
   border: 1px solid black;
   border-radius: 5px;
   margin: 5px; 
-  background-color: white;  
+  background-color: white; 
+
 }
 .diceContainer {
   position: fixed;
-
   border: 1px solid black;
   display: flex;
   flex-direction: row;
@@ -22,9 +22,6 @@
   background-color: lightblue;
   justify-content: space-around;
   
-  
-  
-
 }
 .scorecard{
   position: fixed;
