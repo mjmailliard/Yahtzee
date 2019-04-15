@@ -5,7 +5,7 @@ export default class Scorecard extends Component {
   constructor(props){
     super(props)
     this.state = {
-      diceRoll: ['default']
+      diceRoll: ['']
     }
   }
 componentDidUpdate(prevProps, prevState){
@@ -15,14 +15,36 @@ componentDidUpdate(prevProps, prevState){
 }
   render(){
     const roll = this.state.diceRoll
-    roll.sort()
+    roll.sort()   
+    const checkSmStraight = [...new Set(roll)]
+
     let counts = {}
     roll.forEach((x) => { counts[x] = (counts[x] || 0)+1; })
-    console.log('counts', counts)
-    let hint = 'default'
-    if (JSON.stringify(roll) === JSON.stringify([1,2,3,4,5]) || JSON.stringify(roll) === JSON.stringify([2,3,4,5,6])) {
-      hint = 'You have a large straight'
-    }
+    let defaultCount = {0:0,1:0, 2:0, 3:0,4:0,5:0,6:0}
+    counts = Object.assign(defaultCount, counts)
+    let countsArray = Object.values(counts)
+    console.log('counts', countsArray)
+    let hints = []
+
+    if (countsArray.findIndex((n) => n === 3) !== -1) {
+      hints.push('3 of a Kind')}
+    if (countsArray.findIndex((n) => n === 4) !== -1) {
+      hints.push('4 of a Kind')}
+    if (countsArray.findIndex((n) => n === 3) !== -1 && 
+        countsArray.findIndex((n) => n === 2) !== -1) {
+      hints.push('Full House')}
+    if (JSON.stringify(checkSmStraight).includes('1,2,3,4') || 
+        JSON.stringify(checkSmStraight).includes('2,3,4,5') || 
+        JSON.stringify(checkSmStraight).includes('3,4,5,6')) {
+      hints.push('Small Straight')}
+    if (JSON.stringify(roll) === JSON.stringify([1,2,3,4,5]) || 
+        JSON.stringify(roll) === JSON.stringify([2,3,4,5,6])) {
+      hints.push('Large Straight')}
+    if (countsArray.findIndex((n) => n > 4) !== -1) {
+      hints.push('Yahtzee!')} 
+
+    
+    
     return(
       <>
       
@@ -109,9 +131,12 @@ componentDidUpdate(prevProps, prevState){
 
             </tbody>
           </table>
-
+        {roll.reduce((acc, cur) => acc + cur)}<br/>
         {roll}<br/>
-        {hint}
+        {hints.map((hint,i) => (
+         <div key={i}> {hint}</div>
+          )) }
+          
 
         </div>
       </>
