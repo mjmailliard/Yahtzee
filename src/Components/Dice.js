@@ -17,11 +17,7 @@ export default class Dice extends Component {
       die5Locked: false,
       diceRoll: [],
     }
-    
   }
-
-
-
   rollDice = async () => {
     if (this.state.die1Locked === false ) { 
       await this.setState({die1: Math.ceil(Math.random() * 6)})
@@ -40,9 +36,7 @@ export default class Dice extends Component {
     }
     this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
   }
-
   render() {
-
     return(
       <>
         <div className="diceContainer">
