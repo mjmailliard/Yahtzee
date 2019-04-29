@@ -1,6 +1,7 @@
 .mainDiv {
   text-align: center;
   background-color: gray;
+  padding-top: 5%;
   height: 100vh;
   width: 100vw;
 }
@@ -14,21 +15,26 @@
 
 }
 .diceContainer {
-  position: fixed;
-  border: 1px solid black;
   display: flex;
   flex-direction: row;
   width: 40%;
+  min-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
   background-color: lightblue;
   justify-content: space-around;
   
 }
 .scorecard{
-  position: fixed;
-  right: 0px;
   width: 40%;
+  min-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
   background-color: azure;
-  border: 1px solid black;
+}
+table{
+  width: 95%;
+  margin: auto;
 }
 td {
   border: 1px solid gray;
