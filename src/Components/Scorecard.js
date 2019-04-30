@@ -27,6 +27,7 @@ scoreDiceRoll(event){
     [event.target.dataset.name]: parseInt(event.target.dataset.value),
     diceRoll: ['']
   })
+  this.props.clearRoll()
 
 
 }
