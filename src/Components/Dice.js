@@ -5,11 +5,11 @@ export default class Dice extends Component {
   constructor(props){
     super(props)
     this.state = {
-      die1: 0,
-      die2: 0,
-      die3: 0,
-      die4: 0,
-      die5: 0,
+      die1: '',
+      die2: '',
+      die3: '',
+      die4: '',
+      die5: '',
       die1Locked: false,
       die2Locked: false,
       die3Locked: false,
