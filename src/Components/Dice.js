@@ -36,19 +36,20 @@ export default class Dice extends Component {
     }
     this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
   }
-  clearRoll = () => {
-    this.setState({
-      die1: '',
-      die2: '',
-      die3: '',
-      die4: '',
-      die5: '',
+  clearRoll = async () => {
+    await this.setState({
+      // die1: '',
+      // die2: '',
+      // die3: '',
+      // die4: '',
+      // die5: '',
       die1Locked: false,
       die2Locked: false,
       die3Locked: false,
       die4Locked: false,
       die5Locked: false,   
     })
+    this.rollDice()
   }
   render() {
     return(

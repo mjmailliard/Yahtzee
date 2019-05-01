@@ -23,12 +23,14 @@ export default class Scorecard extends Component {
     }
   }
 scoreDiceRoll(event){
+  console.log(event.target.dataset.name)
+  if (this.state[event.target.dataset.name] === 0) {
   this.setState({
     [event.target.dataset.name]: parseInt(event.target.dataset.value),
     diceRoll: ['']
   })
   this.props.clearRoll()
-
+  }
 
 }
 
@@ -51,7 +53,7 @@ componentDidUpdate(prevProps, prevState){
 
     const scoreUpperSection = this.state.scoreOnes + this.state.scoreTwos + this.state.scoreThrees + this.state.scoreFours + this.state.scoreFives + this.state.scoreSixes
     let scoreBonus = 0
-    if (scoreUpperSection > 63) {scoreBonus = 35}
+    if (scoreUpperSection >= 63) {scoreBonus = 35}
     let totalScore = scoreUpperSection + this.state.scoreThreeOfAKind + this.state.scoreFourOfAKind + this.state.scoreSmStraight + this.state.scoreLrgStraight + this.state.scoreFullHouse + this.state.scoreYahtzee + this.state.scoreChance + scoreBonus
 
     let hints = []
