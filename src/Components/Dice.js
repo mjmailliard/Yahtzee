@@ -87,7 +87,7 @@ export default class Dice extends Component {
         </div>
         
         
-        <button onClick={()=> this.rollDice()}> roll all </button>
+        <button onClick={()=> this.rollDice()}> Roll Dice </button>
         
 
         </div>

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import Dice from './Components/Dice';
-
+//import Dice from './Components/Dice';
+import Game from './Components/Game'
 class App extends Component {
   render() {
     return (
       <div className="mainDiv">
         
-        <Dice />
-        
+        <Game />
+ 
       </div>
     );
   }
