@@ -20,39 +20,63 @@ export default class Scorecard extends Component {
       scoreLrgStraight: null,
       scoreYahtzee: null,
       scoreChance: null,
-
+      gameOver: null,
     }  
     this.rollStatus = {}
   }
-scoreDiceRoll(event){
-
-    if(this.rollStatus[event.target.dataset.id] === true){
-      if (this.state[event.target.dataset.name] === null) {
-        this.setState({
-          [event.target.dataset.name]: parseInt(event.target.dataset.value),
-          diceRoll: ['']
-        })
-        this.setState({turnCount: this.state.turnCount + 1})
-        this.props.clearRoll()
-      }
-    } else if ( this.state[event.target.dataset.name] === null ) {
-      this.setState({
-        [event.target.dataset.name]: 0
-      })
-      this.setState({turnCount: this.state.turnCount + 1})
-
-     this.props.clearRoll()
-    }
-    // if(this.state.turnCount >= 13) {
-    //   alert('Game Over')
-    // }
-}
-
 componentDidUpdate(prevProps, prevState){
   if (this.props.roll !== prevProps.roll){
     this.setState({diceRoll:this.props.roll})
   }
 }
+async scoreDiceRoll(event) {
+
+    if(this.rollStatus[event.target.dataset.id] === true) {
+      if (this.state[event.target.dataset.name] === null) {
+        await this.setState({
+          [event.target.dataset.name]: parseInt(event.target.dataset.value),
+          diceRoll: ['']
+        })
+        await this.setState({turnCount: this.state.turnCount + 1})
+        this.props.clearRoll()
+      }
+    } else if ( this.state[event.target.dataset.name] === null ) {
+      await this.setState({
+        [event.target.dataset.name]: 0
+      })
+     await this.setState({turnCount: this.state.turnCount + 1})
+
+     this.props.clearRoll()
+    }
+    if(this.state.turnCount >= 13) {
+      this.setState({gameOver: 'Game Over'})
+      
+    }
+}
+
+newGame() {
+  this.setState({
+    turnCount: 0,
+    diceRoll: [0],
+    scoreOnes: null,
+    scoreTwos: null,
+    scoreThrees: null,
+    scoreFours: null,
+    scoreFives: null,
+    scoreSixes: null,
+    scoreThreeOfAKind: null,
+    scoreFourOfAKind: null,
+    scoreFullHouse: null,
+    scoreSmStraight: null,
+    scoreLrgStraight: null,
+    scoreYahtzee: null,
+    scoreChance: null,
+    gameOver: null,
+  })
+  this.props.clearRoll()
+}
+
+
 
   render(){
     const roll = this.state.diceRoll
@@ -128,15 +152,15 @@ componentDidUpdate(prevProps, prevState){
       <>
         <div className="scorecard">
           <table>
-            <thead>
+            {/* <thead>
               <tr>
                 <th colSpan='3'>Scorecard</th>
               </tr>
-            </thead>
+            </thead> */}
             <tbody>
               <tr>
                 <td style={{borderWidth: '0'}}>Current Roll: {rollTotal}</td>
-                <td style={{borderWidth: '0'}} colSpan='2'>{hints}</td>
+                <td style={{borderWidth: '0'}} colSpan='2'>{hints}{this.state.gameOver}</td>
               </tr>
               <tr style={{textDecoration:`${(this.state.scoreOnes === 0) ? 'line-through wavy black':''}`}}>
                 {/* <td>{countsArray[1]}</td> */}
@@ -232,7 +256,7 @@ componentDidUpdate(prevProps, prevState){
                 {/* <td></td> */}
                 <td>Total Score</td>
                 <td>{(totalScore > 0) ? totalScore : null}</td>
-                <td></td>
+                <td><button onClick={() => this.newGame()}>New Game</button></td>
               </tr>
             </tbody>
           </table>

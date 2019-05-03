@@ -16,25 +16,30 @@ export default class Dice extends Component {
       die4Locked: false,
       die5Locked: false,
       diceRoll: [],
+      rollCount: 0,
     }
   }
   rollDice = async () => {
-    if (this.state.die1Locked === false ) { 
-      await this.setState({die1: Math.ceil(Math.random() * 6)})
-    }
-    if (this.state.die2Locked === false ) { 
-      await this.setState({die2: Math.ceil(Math.random() * 6)});
-    }
-    if (this.state.die3Locked === false ) { 
-      await this.setState({die3: Math.ceil(Math.random() * 6)});
-    }
-    if (this.state.die4Locked === false ) { 
-      await this.setState({die4: Math.ceil(Math.random() * 6)});
-    }
-    if (this.state.die5Locked === false ) { 
-      await this.setState({die5: Math.ceil(Math.random() * 6)});
-    }
-    this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
+    if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls. \n You must score your dice in a category below to continue.')} 
+      else {
+      if (this.state.die1Locked === false ) { 
+        await this.setState({die1: Math.ceil(Math.random() * 6)})
+      }
+      if (this.state.die2Locked === false ) { 
+        await this.setState({die2: Math.ceil(Math.random() * 6)});
+      }
+      if (this.state.die3Locked === false ) { 
+        await this.setState({die3: Math.ceil(Math.random() * 6)});
+      }
+      if (this.state.die4Locked === false ) { 
+        await this.setState({die4: Math.ceil(Math.random() * 6)});
+      }
+      if (this.state.die5Locked === false ) { 
+        await this.setState({die5: Math.ceil(Math.random() * 6)});
+      }
+      this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
+      this.setState({rollCount: parseInt([this.state.rollCount]) + 1 })
+   }
   }
   clearRoll = async () => {
     await this.setState({
@@ -47,7 +52,8 @@ export default class Dice extends Component {
       die2Locked: false,
       die3Locked: false,
       die4Locked: false,
-      die5Locked: false,   
+      die5Locked: false,  
+      rollCount: 0, 
     })
     this.rollDice()
   }
@@ -88,9 +94,13 @@ export default class Dice extends Component {
         
         
         <button onClick={()=> this.rollDice()}> Roll Dice </button>
+      </div>
+       <div>
+      {(this.state.rollCount === 1) ? 'First Roll': 
+          (this.state.rollCount === 2) ? 'Second Roll': 
+          (this.state.rollCount === 3) ? 'Last Roll': 'Roll the dice to begin'}
+       </div>  
         
-
-        </div>
         <Scorecard roll={this.state.diceRoll} clearRoll={this.clearRoll}/>
       </>
     )
