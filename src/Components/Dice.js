@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Scorecard from './Scorecard';
+import unLocked from '../Assets/lockOpen.png'
+import locked from '../Assets/lockClosed.png'
 
 export default class Dice extends Component {
   constructor(props){
@@ -62,40 +64,55 @@ export default class Dice extends Component {
       <>
         <div className="diceContainer">
         <div>
-          <div className="dieSize">
-            {this.state.die1}
-          </div>
-          <input type="checkbox" checked={this.state.die1Locked} onChange={e => this.setState(prevState => ({die1Locked: !prevState.die1Locked}))} id='die1' name='die1' value='locked'/>
+          <label>
+            <div className="dieSize">
+              {this.state.die1}
+            </div>
+            <img className="lock" src={this.state.die1Locked ? locked:unLocked}/>
+            <input hidden type="checkbox" checked={this.state.die1Locked} onChange={e => this.setState(prevState => ({die1Locked: !prevState.die1Locked}))} id='die1' name='die1' value='locked'/>
+        </label>
         </div> 
         <div> 
-          <div className="dieSize">
-            {this.state.die2}
-          </div>
-          <input type="checkbox" id='die2' name='die2' value='locked' checked={this.state.die2Locked} onChange={e => this.setState(prevState => ({die2Locked: !prevState.die2Locked}))}/>
+          <label>
+            <div className="dieSize">
+              {this.state.die2}
+            </div>
+            <img className="lock" src={this.state.die2Locked ? locked:unLocked}/>
+            <input hidden type="checkbox" id='die2' name='die2' value='locked' checked={this.state.die2Locked} onChange={e => this.setState(prevState => ({die2Locked: !prevState.die2Locked}))}/>
+          </label>
      </div> 
         <div>
-          <div className="dieSize"> 
-            {this.state.die3}
-          </div>
-        <input type="checkbox" id='die3' name='die3' value='locked' checked={this.state.die3Locked} onChange={e => this.setState(prevState => ({die3Locked: !prevState.die3Locked}))}/>
+          <label>
+            <div className="dieSize"> 
+              {this.state.die3}
+            </div>
+            <img className="lock" src={this.state.die3Locked ? locked:unLocked}/>
+            <input hidden type="checkbox" id='die3' name='die3' value='locked' checked={this.state.die3Locked} onChange={e => this.setState(prevState => ({die3Locked: !prevState.die3Locked}))}/>
+          </label>
         </div>  
         <div>
-          <div className="dieSize">
-            {this.state.die4}
-          </div>
-          <input type="checkbox" id='die4' name='die4' value='locked' checked={this.state.die4Locked} onChange={e => this.setState(prevState => ({die4Locked: !prevState.die4Locked}))}/>
+          <label>
+            <div className="dieSize">
+              {this.state.die4}
+            </div>
+            <img className="lock" src={this.state.die4Locked ? locked:unLocked}/>
+            <input hidden type="checkbox" id='die4' name='die4' value='locked' checked={this.state.die4Locked} onChange={e => this.setState(prevState => ({die4Locked: !prevState.die4Locked}))}/>
+          </label>
       </div>  
         <div>
-          <div className="dieSize"> 
-            {this.state.die5}
-          </div>
-          <input type="checkbox" id='die5' name='die5' value='locked' checked={this.state.die5Locked} onChange={e => this.setState(prevState => ({die5Locked: !prevState.die5Locked}))}/>
+        <label>
+            <div className="dieSize"> 
+              {this.state.die5}
+            </div>
+            <img className="lock" src={this.state.die5Locked ? locked:unLocked}/>
+            <input hidden type="checkbox" id='die5' name='die5' value='locked' checked={this.state.die5Locked} onChange={e => this.setState(prevState => ({die5Locked: !prevState.die5Locked}))}/>
+          </label>
         </div>
         
         
         <button onClick={()=> this.rollDice()}> Roll Dice </button>
       </div>
-       <div>
+       <div className="scorecard">
       {(this.state.rollCount === 1) ? 'First Roll': 
           (this.state.rollCount === 2) ? 'Second Roll': 
           (this.state.rollCount === 3) ? 'Last Roll': 'Roll the dice to begin'}
