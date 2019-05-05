@@ -1,33 +1,47 @@
 .mainDiv {
-  text-align: center;
   background-color: gray;
   padding-top: 5%;
-  height: 100vh;
+  padding-bottom: 5%;
+  height: 100%;
   width: 100vw;
 }
 .dieSize{
-  height: 40px;
-  width: 40px;
+  height: 45px;
+  width: 45px;
   border: 1px solid black;
   border-radius: 5px;
   margin: 5px; 
-  background-color: white; 
+  background-color: rgb(245, 245, 245); 
+  font-size: 2em;
+
+}
+.btnRollDice{
+text-align: center;
+width: 70px;
+height: 60px;
+border-radius: 3px;
+background-color: rgb(180, 180, 180);
+font-size: 1.25em;
 
 }
 .diceContainer {
+  width: 500px;
+  text-align: center;
   display: flex;
   flex-direction: row;
-  width: 40%;
-  min-width: 400px;
+  min-width: 320px;
   margin-left: auto;
   margin-right: auto;
   background-color: rgb(0, 47, 92);
   justify-content: space-around;
+  align-items: center;
+  border-radius: 5px 5px 0px 0px
   
 }
 .scorecard{
-  width: 40%;
-  min-width: 400px;
+  width: 500px;
+  text-align: center;
+  min-width: 320px;
   margin-left: auto;
   margin-right: auto;
   background-color: azure;
@@ -38,12 +52,53 @@ table{
 }
 td {
   border: 1px solid gray;
+  border-radius: 5px;
 }
+.scoreColumn{
+  width: 35px;
 
+}
 
 .lock {
-  height: 25px;
-  width: 25px;
-  bottom: -5px;
-  right: -5px;
+  height: 30px;
+  width: 30px;
+
 }
+.hints{
+  font-style: italic;
+  font-size: 1.1em;
+  font-weight: 700;
+}
+@media (max-width: 480px) { 
+  .mainDiv {
+    padding-top: 0px;
+  }
+  .diceContainer {
+  width: 100%;
+  border-radius: 0px;
+  }
+  .btnRollDice{
+    width: 50px;
+    height: 40px;
+    font-size: 1em; 
+  }
+  .scorecard{
+    width: 100%;
+
+  }
+  .dieSize{
+    height: 35px;
+    width: 35px;
+    font-size: 1.5em;
+  
+  }
+  .lock {
+    height: 20px;
+    width: 20px;
+  
+  }
+  td {
+    height: 35px;
+  }
+
+ }
