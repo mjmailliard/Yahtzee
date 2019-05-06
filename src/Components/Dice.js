@@ -24,8 +24,8 @@ export default class Dice extends Component {
   }
   rollDice = async () => {
     if (this.state.gameOver === false){
-    if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls. \n You must score your dice in a category below to continue.')} 
-      else {
+    // if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls. \n You must score your dice in a category below to continue.')} 
+    //   else {
       if (this.state.die1Locked === false ) { 
         await this.setState({die1: Math.ceil(Math.random() * 6)})
       }
@@ -44,7 +44,7 @@ export default class Dice extends Component {
       this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
       this.setState({rollCount: parseInt([this.state.rollCount]) + 1 })
    }
-  }
+  // }
   }
   clearRoll = async () => {
     await this.setState({
@@ -120,9 +120,9 @@ export default class Dice extends Component {
         
       </div>
        <div className="scorecard">
-        {(this.state.rollCount === 1) ? 'First Roll': 
-            (this.state.rollCount === 2) ? 'Second Roll': 
-            (this.state.rollCount === 3) ? 'Last Roll': 'Roll the dice to begin'}
+        {(this.state.rollCount === 1) ? 'Two rolls remaining.': 
+            (this.state.rollCount === 2) ? 'One roll remaining.': 
+            (this.state.rollCount === 3) ? 'Where would you like to score the roll?': 'Roll the dice to begin.'}
       </div>  
 
         <Scorecard roll={this.state.diceRoll} clearRoll={this.clearRoll} toggleGameOver={this.toggleGameOver}/>

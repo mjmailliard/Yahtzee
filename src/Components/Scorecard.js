@@ -21,8 +21,9 @@ export default class Scorecard extends Component {
       scoreYahtzee: null,
       scoreChance: null,
       gameOver: null,
+      yahtzeeCount: 0
     }  
-    this.yahtzeeCount = 0
+    this.countsArrayCopy = {}
     this.rollStatus = {}
   }
 componentDidUpdate(prevProps, prevState){
@@ -31,6 +32,19 @@ componentDidUpdate(prevProps, prevState){
   }
 }
 async scoreDiceRoll(event) {
+  event.persist()
+  if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1){
+    await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
+    if(this.state.scoreYahtzee  === 50){
+     await this.setState({scoreYahtzee: this.state.scoreYahtzee + 100})
+    }else if(this.state.scoreYahtzee > 50){
+     await this.setState({scoreYahtzee: this.state.scoreYahtzee + 100})
+     
+      //allow category points in full house, small straight and large straight
+
+    }
+
+  } 
   if(this.state.diceRoll.length > 1){
     if(this.rollStatus[event.target.dataset.id] === true) {
       if (this.state[event.target.dataset.name] === null) {
@@ -54,6 +68,7 @@ async scoreDiceRoll(event) {
       this.setState({gameOver: 'Game Over'})
       this.props.toggleGameOver()
     }
+
   }
 }
 
@@ -91,7 +106,7 @@ newGame() {
     let defaultCount = {0:0,1:0, 2:0, 3:0,4:0,5:0,6:0}
     counts = Object.assign(defaultCount, counts)
     let countsArray = Object.values(counts)
-
+    this.countsArrayCopy = countsArray
     const scoreUpperSection = this.state.scoreOnes + this.state.scoreTwos + this.state.scoreThrees + this.state.scoreFours + this.state.scoreFives + this.state.scoreSixes
     let scoreBonus = null
     if (scoreUpperSection >= 63) {scoreBonus = 35}
@@ -146,6 +161,9 @@ newGame() {
           this.rollStatus.yahtzee = true
           this.yahtzeeCount++ } 
       else {this.rollStatus.yahtzee = false} 
+    if (countsArray.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50) {
+      hints = 'Another Yahtzee and 100 bonus points!'
+    }
     if (this.state.scoreChance === null && this.state.diceRoll.length > 1){
       this.rollStatus.chance = true }
       else {this.rollStatus.chance = false }
@@ -248,7 +266,7 @@ newGame() {
                 {/* <td>{this.rollStatus.yahtzee ? 50 : 0}</td> */}
                 <td onClick={(e) => this.scoreDiceRoll(e)} data-id="yahtzee" data-name="scoreYahtzee" data-value={this.rollStatus.yahtzee ? 50 : 0} style={{backgroundColor:`${this.rollStatus.yahtzee ? '#0a0' : ''}`, color:`${this.rollStatus.yahtzee ? 'white': ''}`}}>YAHTZEE</td>
                 <td className="scoreColumn">{this.state.scoreYahtzee}</td>
-                <td>50 points</td>
+                <td>50 points (100 per additional)</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreChance === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreChance === 0) ? 'red':''}`}}>
                 {/* <td>{rollTotal}</td> */}
