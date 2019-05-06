@@ -19,11 +19,13 @@ export default class Dice extends Component {
       die5Locked: false,
       diceRoll: [],
       rollCount: 0,
+      gameOver: false,
     }
   }
   rollDice = async () => {
-    // if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls. \n You must score your dice in a category below to continue.')} 
-    //   else {
+    if (this.state.gameOver === false){
+    if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls. \n You must score your dice in a category below to continue.')} 
+      else {
       if (this.state.die1Locked === false ) { 
         await this.setState({die1: Math.ceil(Math.random() * 6)})
       }
@@ -41,15 +43,16 @@ export default class Dice extends Component {
       }
       this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
       this.setState({rollCount: parseInt([this.state.rollCount]) + 1 })
-  //  }
+   }
+  }
   }
   clearRoll = async () => {
     await this.setState({
-      // die1: '',
-      // die2: '',
-      // die3: '',
-      // die4: '',
-      // die5: '',
+      die1: '',
+      die2: '',
+      die3: '',
+      die4: '',
+      die5: '',
       die1Locked: false,
       die2Locked: false,
       die3Locked: false,
@@ -57,7 +60,10 @@ export default class Dice extends Component {
       die5Locked: false,  
       rollCount: 0, 
     })
-    this.rollDice()
+    //this.rollDice()
+  }
+  toggleGameOver = async () => {
+   await this.setState({gameOver: !this.state.gameOver})
   }
   render() {
     return(
@@ -114,12 +120,12 @@ export default class Dice extends Component {
         
       </div>
        <div className="scorecard">
-      {(this.state.rollCount === 1) ? 'First Roll': 
-          (this.state.rollCount === 2) ? 'Second Roll': 
-          (this.state.rollCount === 3) ? 'Last Roll': 'Roll the dice to begin'}
-</div>  
-        
-        <Scorecard roll={this.state.diceRoll} clearRoll={this.clearRoll}/>
+        {(this.state.rollCount === 1) ? 'First Roll': 
+            (this.state.rollCount === 2) ? 'Second Roll': 
+            (this.state.rollCount === 3) ? 'Last Roll': 'Roll the dice to begin'}
+      </div>  
+
+        <Scorecard roll={this.state.diceRoll} clearRoll={this.clearRoll} toggleGameOver={this.toggleGameOver}/>
       </>
     )
   }

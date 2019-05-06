@@ -31,7 +31,7 @@ componentDidUpdate(prevProps, prevState){
   }
 }
 async scoreDiceRoll(event) {
-
+  if(this.state.diceRoll.length > 1){
     if(this.rollStatus[event.target.dataset.id] === true) {
       if (this.state[event.target.dataset.name] === null) {
         await this.setState({
@@ -48,11 +48,13 @@ async scoreDiceRoll(event) {
      await this.setState({turnCount: this.state.turnCount + 1})
 
      this.props.clearRoll()
+     this.setState({diceRoll: [0]})
     }
     if(this.state.turnCount >= 13) {
       this.setState({gameOver: 'Game Over'})
-      
+      this.props.toggleGameOver()
     }
+  }
 }
 
 newGame() {
@@ -75,6 +77,7 @@ newGame() {
     gameOver: null,
   })
   this.props.clearRoll()
+  this.props.toggleGameOver()
 }
 
 
@@ -160,8 +163,8 @@ newGame() {
             </thead> */}
             <tbody>
               <tr>
-                <td style={{borderWidth: '0'}}>Current Roll: {rollTotal}</td>
-                <td className="hints" colSpan='2' style={{borderWidth: '0', color:`${(hints.length > 0) ? '#0a0': ''}`}}>{hints}{this.state.gameOver}</td>
+                <td style={{borderWidth: '0'}}>This Roll: {rollTotal}</td>
+                <td className="hints" colSpan='2' style={{borderWidth: '0', color:`${hints.length > 0 || this.state.gameOver != null ? '#0a0': ''}`}}>{hints}{this.state.gameOver}</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreOnes === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreOnes === 0) ? 'red':''}`}}>
                 {/* <td>{countsArray[1]}</td> */}
