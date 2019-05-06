@@ -33,18 +33,27 @@ componentDidUpdate(prevProps, prevState){
 }
 async scoreDiceRoll(event) {
   event.persist()
+//? need overarching logic for 2nd yahtzee? when called, check event valid for second yahtzee, or stop function, try again?
+
+  // if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50){
+  //   //check if event matches upper section?
+
+  //   //this will catch additional yahtzee rolls
+  //   // if the matching upper category is empty, then must use it
+  //   //otherwise, may use anywhere
+  //   // additional yahtzee may be used in full house, small straight and lrg straight slots for full points
+
+
+  //   // await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
+  //   // await this.setState({turnCount: this.state.turnCount + 1})
+  //   // await this.setState({scoreYahtzee: this.state.scoreYahtzee + 100})
+  //   // this.props.clearRoll()
+  //   // this.setState({diceRoll: [0]})   
+
+  // } else
   if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1){
     await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
-    if(this.state.scoreYahtzee  === 50){
-     await this.setState({scoreYahtzee: this.state.scoreYahtzee + 100})
-    }else if(this.state.scoreYahtzee > 50){
-     await this.setState({scoreYahtzee: this.state.scoreYahtzee + 100})
-     
-      //allow category points in full house, small straight and large straight
-
-    }
-
-  } 
+   }
   if(this.state.diceRoll.length > 1){
     if(this.rollStatus[event.target.dataset.id] === true) {
       if (this.state[event.target.dataset.name] === null) {
@@ -66,7 +75,7 @@ async scoreDiceRoll(event) {
     }
     if(this.state.turnCount >= 13) {
       this.setState({gameOver: 'Game Over'})
-      this.props.toggleGameOver()
+      this.props.toggleGameOver(true)
     }
 
   }
@@ -89,10 +98,10 @@ newGame() {
     scoreLrgStraight: null,
     scoreYahtzee: null,
     scoreChance: null,
-    gameOver: null,
+    
   })
   this.props.clearRoll()
-  this.props.toggleGameOver()
+  this.props.toggleGameOver(false)
 }
 
 
@@ -161,13 +170,14 @@ newGame() {
           this.rollStatus.yahtzee = true
           this.yahtzeeCount++ } 
       else {this.rollStatus.yahtzee = false} 
+      
     if (countsArray.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50) {
       hints = 'Another Yahtzee and 100 bonus points!'
+      
     }
     if (this.state.scoreChance === null && this.state.diceRoll.length > 1){
       this.rollStatus.chance = true }
       else {this.rollStatus.chance = false }
-
 
     
     return(
