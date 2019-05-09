@@ -7,11 +7,11 @@ export default class Dice extends Component {
   constructor(props){
     super(props)
     this.state = {
-      die1: '',
-      die2: '',
-      die3: '',
-      die4: '',
-      die5: '',
+      die1: null,
+      die2: null,
+      die3: null,
+      die4: null,
+      die5: null,
       die1Locked: false,
       die2Locked: false,
       die3Locked: false,
@@ -23,19 +23,19 @@ export default class Dice extends Component {
     }
   }
   rollDice = async () => {
-    if (this.state.diceRoll.length === 0){
-      await this.setState({      
-        die1Locked: false,
-        die2Locked: false,
-        die3Locked: false,
-        die4Locked: false,
-        die5Locked: false})
-    }
+
+    if (this.state.die1 === null ){ await this.setState({die1Locked: false})}
+    if (this.state.die2 === null ){ await this.setState({die2Locked: false})}
+    if (this.state.die3 === null ){ await this.setState({die3Locked: false})}
+    if (this.state.die4 === null ){ await this.setState({die4Locked: false})}
+    if (this.state.die5 === null ){ await this.setState({die5Locked: false})}
+    
+    
     if (this.state.gameOver === false){
-    if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls. \n You must score your dice in a category below to continue.')} 
-      else {
+    // if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls. \n You must score your dice in a category below to continue.')} 
+    //   else {
       if (this.state.die1Locked === false ) { 
-        await this.setState({die1: Math.ceil(Math.random() * 6)})
+        await this.setState({die1: Math.ceil(Math.random() * 6)});
       }
       if (this.state.die2Locked === false ) { 
         await this.setState({die2: Math.ceil(Math.random() * 6)});
@@ -51,16 +51,16 @@ export default class Dice extends Component {
       }
       this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
       this.setState({rollCount: parseInt([this.state.rollCount]) + 1 })
-   }
+  //  }
   }
   }
   clearRoll = async () => {
     await this.setState({
-      die1: '',
-      die2: '',
-      die3: '',
-      die4: '',
-      die5: '',
+      die1: null,
+      die2: null,
+      die3: null,
+      die4: null,
+      die5: null,
       die1Locked: false,
       die2Locked: false,
       die3Locked: false,
@@ -71,7 +71,7 @@ export default class Dice extends Component {
     //this.rollDice()
   }
   toggleGameOver = async (boolean) => {
-   await this.setState({gameOver: boolean})
+   await this.setState({gameOver: boolean}) 
   }
 
   render() {

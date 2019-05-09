@@ -33,24 +33,41 @@ componentDidUpdate(prevProps, prevState){
 }
 async scoreDiceRoll(event) {
   event.persist()
-//? need overarching logic for 2nd yahtzee? when called, check event valid for second yahtzee, or stop function, try again?
+//? need overarching logic for 2nd yahtzee? when called, check event valid for next yahtzee, or stop function, try again?
 
-  // if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50){
-  //   //check if event matches upper section?
+//this will catch additional yahtzee rolls
+  if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50){
+    console.log(event.target.dataset.name)
+    //check if event belongs to top section
+    if (event.target.dataset.name === 'scoreOnes' || event.target.dataset.name === 'scoreTwos' || event.target.dataset.name === 'scoreThrees' || event.target.dataset.name === 'scoreFours' || event.target.dataset.name === 'scoreFives' || event.target.dataset.name === 'scoreSixes'){
+      console.log('you clicked the upper section')
+      //check if corresponding row has been scored
+      if (this.state[event.target.dataset.name] === null){ 
+        await this.setState({
+          [event.target.dataset.name]: parseInt(event.target.dataset.value),
+          diceRoll: ['']
+        })
+        
+      }
+    } else { console.log(`you clicked in the lower section `)
+        //get value of dice? from roll array to use to verify if upper section has been filled
+        //use array.findIndex() on this.countsArrayCopy
+        console.log(`you rolled ${this.countsArrayCopy.findIndex(n => n > 4 )}'s`)
+        // use this number to check if upper slot === null
+    //allow scoring in lower level here?
+    } 
+    // if the matching upper category is empty, then must use it
+    //otherwise, may use anywhere
+    // additional yahtzee may be used in full house, small straight and lrg straight slots for full points
 
-  //   //this will catch additional yahtzee rolls
-  //   // if the matching upper category is empty, then must use it
-  //   //otherwise, may use anywhere
-  //   // additional yahtzee may be used in full house, small straight and lrg straight slots for full points
 
+    // await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
+    // await this.setState({turnCount: this.state.turnCount + 1})
+    // await this.setState({scoreYahtzee: this.state.scoreYahtzee + 100})
+    // this.props.clearRoll()
+    // this.setState({diceRoll: [0]})   
 
-  //   // await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
-  //   // await this.setState({turnCount: this.state.turnCount + 1})
-  //   // await this.setState({scoreYahtzee: this.state.scoreYahtzee + 100})
-  //   // this.props.clearRoll()
-  //   // this.setState({diceRoll: [0]})   
-
-  // } else
+  } else {
   if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1){
     await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
    }
@@ -77,7 +94,7 @@ async scoreDiceRoll(event) {
       this.setState({gameOver: 'Game Over'})
       this.props.toggleGameOver(true)
     }
-
+  }
   }
 }
 
