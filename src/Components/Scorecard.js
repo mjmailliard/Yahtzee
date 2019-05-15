@@ -115,7 +115,8 @@ newGame() {
     scoreLrgStraight: null,
     scoreYahtzee: null,
     scoreChance: null,
-    
+    gameOver: null,
+    yahtzeeCount: 0
   })
   this.props.clearRoll()
   this.props.toggleGameOver(false)
