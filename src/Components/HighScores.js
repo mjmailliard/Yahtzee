@@ -29,7 +29,7 @@ export class HighScores extends Component {
 
   render() {
     return (
-      <table>
+      <table className='highScoresTable'>
         <thead>
           <tr>
             <th>Name</th><th>Score</th><th>Taunt</th>
@@ -37,7 +37,7 @@ export class HighScores extends Component {
         </thead>
         <tbody>
         {this.state.scores.map(score => 
-          <tr key={score.id}>
+          <tr key={score.id} className='highScoresTr'>
             <td className='name'>{score.name}</td><td className='score'>{score.score}</td><td className='taunt'>{`"${score.taunt}"`}</td>
           </tr>
         )}

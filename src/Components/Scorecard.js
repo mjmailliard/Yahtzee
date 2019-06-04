@@ -10,8 +10,8 @@ const customStyles = {
     right                 : 'auto',
     bottom                : 'auto',
     marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-
+    transform             : 'translate(-50%, -50%)',
+    backgroundColor: 'rgb(0, 47, 92)'
   }
 }
 Modal.setAppElement('#root')
@@ -377,7 +377,7 @@ handleShowHighScores = async () => {
             style={customStyles}
           >
             <HighScores scores={this.state.scoreBoard} refreshScores={this.getHighScores}/>
-            <button onClick={()=>this.setState({modalGetScoresVisible: false})}>close</button>
+            <button className='closeModalBtn' onClick={()=>this.setState({modalGetScoresVisible: false})}>X</button>
           </Modal>
           <Modal id='AddScore'
             isOpen={this.state.modalAddScoreVisible}
@@ -385,7 +385,7 @@ handleShowHighScores = async () => {
             style={customStyles}
             >
               <AddScore score={totalScore} showHighScores={this.handleShowHighScores} refreshScores={this.getHighScores}/>
-            <button onClick={()=>this.setState({modalAddScoreVisible: false})}>close</button>
+            <button className='closeModalBtn' onClick={()=>this.setState({modalAddScoreVisible: false})}>X</button>
 
           </Modal>
 
