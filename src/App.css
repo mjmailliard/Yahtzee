@@ -69,6 +69,51 @@ td {
   font-size: 1.1em;
   font-weight: 700;
 }
+.name{
+  text-align: center;
+  padding: 2px;
+  height: 1.2em;
+}
+.score{
+  font-weight: 600; 
+  text-align: center;
+  padding: 2px;
+  height: 1.2em;
+
+}
+.taunt{
+  font-style: oblique;
+  text-align: center;
+  padding: 2px;
+  height: 1.2em;
+
+}
+form {
+  border-radius: 5px;
+  text-align: center;
+  width: 100;
+  margin: auto;
+}
+form div{
+  width: 100%;
+  margin: auto;
+}
+form div input{
+  border-radius: 5px;
+  width: 85%;
+  height: 1.3em;
+  padding: 4px;
+  text-align: center;
+  margin: 4px;
+}
+form div textarea{
+  border-radius: 5px;
+  width: 85%;
+  padding: 4px;
+  text-align: center;
+  height: 3em;
+  margin: 4px;
+}
 @media (max-width: 480px) { 
   .mainDiv {
     padding-top: 0px;

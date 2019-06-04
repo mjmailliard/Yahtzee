@@ -1,6 +1,20 @@
 import React, { Component } from 'react'
+import HighScores from './HighScores'
+import AddScore from './AddScore'
+import Modal from 'react-modal'
 
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
 
+  }
+}
+Modal.setAppElement('#root')
 export default class Scorecard extends Component {
   constructor(props){
     super(props)
@@ -21,12 +35,28 @@ export default class Scorecard extends Component {
       scoreYahtzee: null,
       scoreChance: null,
       gameOver: null,
-      yahtzeeCount: 0
+      yahtzeeCount: 0,
+      modalGetScoresVisible: false,
+      modalAddScoreVisible: false,
+      scoreBoard: [{name: 'Loading Scores'}],
     }  
     this.countsArrayCopy = {}
     this.rollStatus = {}
   }
+getHighScores = async () => {
+  // console.log('getHighScores()')
+   await fetch('https://serene-wildwood-42273.herokuapp.com/')
+    .then(data => data.json())
+    .then(jsonData => this.setState({scoreBoard: jsonData[0]}))
+    
+}
+async componentDidMount() {
+  // console.log('scorecard didMount')
+  await this.getHighScores()
+
+}
 componentDidUpdate(prevProps, prevState){
+  // console.log('scorecard didUpdate')
   if (this.props.roll !== prevProps.roll){
     this.setState({diceRoll:this.props.roll})
   }
@@ -37,19 +67,25 @@ async scoreDiceRoll(event) {
 
 //this will catch additional yahtzee rolls
   if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50){
+      
     console.log(event.target.dataset.name)
     //check if event belongs to top section
     if (event.target.dataset.name === 'scoreOnes' || event.target.dataset.name === 'scoreTwos' || event.target.dataset.name === 'scoreThrees' || event.target.dataset.name === 'scoreFours' || event.target.dataset.name === 'scoreFives' || event.target.dataset.name === 'scoreSixes'){
       console.log('you clicked the upper section')
       //check if corresponding row has been scored
       if (this.state[event.target.dataset.name] === null){ 
+        
+        
         await this.setState({
           [event.target.dataset.name]: parseInt(event.target.dataset.value),
           diceRoll: ['']
         })
         
-      }
-    } else { console.log(`you clicked in the lower section `)
+      } else { }
+    } else { 
+      console.log(`you clicked in the lower section`
+
+    )
         //get value of dice? from roll array to use to verify if upper section has been filled
         //use array.findIndex() on this.countsArrayCopy
         console.log(`you rolled ${this.countsArrayCopy.findIndex(n => n > 4 )}'s`)
@@ -91,14 +127,20 @@ async scoreDiceRoll(event) {
      this.setState({diceRoll: [0]})
     }
     if(this.state.turnCount >= 13) {
+      const scoreBoardLength = this.state.scoreBoard.length
       this.setState({gameOver: 'Game Over'})
       this.props.toggleGameOver(true)
+      if (event.target.dataset.score > this.state.scoreBoard[scoreBoardLength - 1].score) {
+      this.setState({modalAddScoreVisible: true})
+      } 
+      this.setState({modalGetScoresVisible: true})
     }
   }
   }
 }
 
 newGame() {
+  // console.log('newGame()')
   this.setState({
     turnCount: 0,
     diceRoll: [0],
@@ -116,12 +158,21 @@ newGame() {
     scoreYahtzee: null,
     scoreChance: null,
     gameOver: null,
-    yahtzeeCount: 0
+    yahtzeeCount: 0,
+    
   })
   this.props.clearRoll()
   this.props.toggleGameOver(false)
 }
 
+handleShowHighScores = async () => {
+  this.newGame()
+  this.getHighScores()
+  this.setState({modalAddScoreVisible: false})
+  this.setState({modalGetScoresVisible: false})
+
+  
+}
 
   render(){
     const roll = this.state.diceRoll
@@ -191,6 +242,11 @@ newGame() {
       
     if (countsArray.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50) {
       hints = 'Another Yahtzee and 100 bonus points!'
+      // if (){
+        //check if corresponding upper section is null
+        //  if yes, highlight only upper section
+        //if no, highlight all lower sections that are not null
+      // }
       
     }
     if (this.state.scoreChance === null && this.state.diceRoll.length > 1){
@@ -214,37 +270,37 @@ newGame() {
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreOnes === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreOnes === 0) ? 'red':''}`}}>
                 {/* <td>{countsArray[1]}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="ones" data-name="scoreOnes" data-value={countsArray[1]} style={{backgroundColor:`${this.rollStatus.ones ? '#0a0' : ''}`, color:`${this.rollStatus.ones ? 'white': ''}`}}>Ones</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="ones" data-name="scoreOnes" data-value={countsArray[1]} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.ones ? '#0a0' : ''}`, color:`${this.rollStatus.ones ? 'white': ''}`}}>Ones</td>
                 <td className="scoreColumn">{this.state.scoreOnes}</td>
                 <td>Count and add only Ones</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreTwos === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreTwos === 0) ? 'red':''}`}}>
                 {/* <td>{countsArray[2] * 2}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="twos" data-name="scoreTwos" data-value={countsArray[2] * 2} style={{backgroundColor:`${this.rollStatus.twos ? '#0a0' : ''}`, color:`${this.rollStatus.twos ? 'white': ''}`}}>Twos</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="twos" data-name="scoreTwos" data-value={countsArray[2] * 2} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.twos ? '#0a0' : ''}`, color:`${this.rollStatus.twos ? 'white': ''}`}}>Twos</td>
                 <td className="scoreColumn">{this.state.scoreTwos}</td>
                 <td>Count and add only Twos</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreThrees === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreThrees === 0) ? 'red':''}`}}>
                 {/* <td>{countsArray[3] * 3}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="threes" data-name="scoreThrees" data-value={countsArray[3] * 3} style={{backgroundColor:`${this.rollStatus.threes ? '#0a0' : ''}`, color:`${this.rollStatus.threes ? 'white': ''}`}}>Threes</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="threes" data-name="scoreThrees" data-value={countsArray[3] * 3} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.threes ? '#0a0' : ''}`, color:`${this.rollStatus.threes ? 'white': ''}`}}>Threes</td>
                 <td className="scoreColumn">{this.state.scoreThrees}</td>
                 <td>Count and add only Threes</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreFours === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreFours === 0) ? 'red':''}`}}>
                 {/* <td>{countsArray[4] * 4}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fours" data-name="scoreFours" data-value={countsArray[4] * 4} style={{backgroundColor:`${this.rollStatus.fours ? '#0a0' : ''}`, color:`${this.rollStatus.fours ? 'white': ''}`}}>Fours</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fours" data-name="scoreFours" data-value={countsArray[4] * 4} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.fours ? '#0a0' : ''}`, color:`${this.rollStatus.fours ? 'white': ''}`}}>Fours</td>
                 <td className="scoreColumn">{this.state.scoreFours}</td>
                 <td>Count and add only Fours</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreFives === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreFives === 0) ? 'red':''}`}}>
                 {/* <td>{countsArray[5] * 5}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fives" data-name="scoreFives" data-value={countsArray[5] * 5} style={{backgroundColor:`${this.rollStatus.fives ? '#0a0' : ''}`, color:`${this.rollStatus.fives ? 'white': ''}`}}>Fives</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fives" data-name="scoreFives" data-value={countsArray[5] * 5} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.fives ? '#0a0' : ''}`, color:`${this.rollStatus.fives ? 'white': ''}`}}>Fives</td>
                 <td className="scoreColumn">{this.state.scoreFives}</td>
                 <td>Count and add only Fives</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreSixes === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreSixes === 0) ? 'red':''}`}}>
                 {/* <td>{countsArray[6] * 6}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="sixes" data-name="scoreSixes" data-value={countsArray[6] * 6} style={{backgroundColor:`${this.rollStatus.sixes ? '#0a0' : ''}`, color:`${this.rollStatus.sixes ? 'white': ''}`}}>Sixes</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="sixes" data-name="scoreSixes" data-value={countsArray[6] * 6} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.sixes ? '#0a0' : ''}`, color:`${this.rollStatus.sixes ? 'white': ''}`}}>Sixes</td>
                 <td className="scoreColumn">{this.state.scoreSixes}</td>
                 <td>Count and add only Sixes</td>
               </tr>
@@ -262,43 +318,43 @@ newGame() {
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreThreeOfAKind === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreThreeOfAKind === 0) ? 'red':''}`}}>
                 {/* <td>{this.rollStatus.threeOfAKind ? rollTotal : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="threeOfAKind" data-name="scoreThreeOfAKind" data-value={rollTotal} style={{backgroundColor:`${this.rollStatus.threeOfAKind ? '#0a0' : ''}`, color:`${this.rollStatus.threeOfAKind ? 'white': ''}`}}>3 of a kind</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="threeOfAKind" data-name="scoreThreeOfAKind" data-value={rollTotal} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.threeOfAKind ? '#0a0' : ''}`, color:`${this.rollStatus.threeOfAKind ? 'white': ''}`}}>3 of a kind</td>
                 <td className="scoreColumn">{this.state.scoreThreeOfAKind}</td>
                 <td>Total of all dice</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreFourOfAKind === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreFourOfAKind === 0) ? 'red':''}`}}>
                 {/* <td>{this.rollStatus.fourOfAKind ? rollTotal : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fourOfAKind" data-name="scoreFourOfAKind" data-value={rollTotal} style={{backgroundColor:`${this.rollStatus.fourOfAKind ? '#0a0' : ''}`, color:`${this.rollStatus.fourOfAKind ? 'white': ''}`}}>4 of a kind</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fourOfAKind" data-name="scoreFourOfAKind" data-value={rollTotal} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.fourOfAKind ? '#0a0' : ''}`, color:`${this.rollStatus.fourOfAKind ? 'white': ''}`}}>4 of a kind</td>
                 <td className="scoreColumn">{this.state.scoreFourOfAKind}</td>
                 <td>Total of all dice</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreFullHouse === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreFullHouse === 0) ? 'red':''}`}}>
                 {/* <td>{this.rollStatus.fullHouse ? 25 : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fullHouse" data-name="scoreFullHouse" data-value={this.rollStatus.fullHouse ? 25 : 0} style={{backgroundColor:`${this.rollStatus.fullHouse ? '#0a0' : ''}`, color:`${this.rollStatus.fullHouse ? 'white': ''}`}}>Full House</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fullHouse" data-name="scoreFullHouse" data-value={this.rollStatus.fullHouse ? 25 : 0} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.fullHouse ? '#0a0' : ''}`, color:`${this.rollStatus.fullHouse ? 'white': ''}`}}>Full House</td>
                 <td className="scoreColumn">{this.state.scoreFullHouse}</td>
                 <td>25 points</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreSmStraight === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreSmStraight === 0) ? 'red':''}`}}>
                 {/* <td>{this.rollStatus.smallStraight ? 30 : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="smallStraight" data-name="scoreSmStraight" data-value={this.rollStatus.smallStraight ? 30 : 0} style={{backgroundColor:`${this.rollStatus.smallStraight ? '#0a0' : ''}`, color:`${this.rollStatus.smallStraight ? 'white': ''}`}}>Small Straight</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="smallStraight" data-name="scoreSmStraight" data-value={this.rollStatus.smallStraight ? 30 : 0} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.smallStraight ? '#0a0' : ''}`, color:`${this.rollStatus.smallStraight ? 'white': ''}`}}>Small Straight</td>
                 <td className="scoreColumn">{this.state.scoreSmStraight}</td>
                 <td>30 points</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreLrgStraight === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreLrgStraight === 0) ? 'red':''}`}}>
                 {/* <td>{this.rollStatus.largeStraight ? 40 : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="largeStraight" data-name="scoreLrgStraight" data-value={this.rollStatus.largeStraight ? 40 : 0} style={{backgroundColor:`${this.rollStatus.largeStraight ? '#0a0' : ''}`, color:`${this.rollStatus.largeStraight ? 'white': ''}`}}>Large Straight</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="largeStraight" data-name="scoreLrgStraight" data-value={this.rollStatus.largeStraight ? 40 : 0} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.largeStraight ? '#0a0' : ''}`, color:`${this.rollStatus.largeStraight ? 'white': ''}`}}>Large Straight</td>
                 <td className="scoreColumn">{this.state.scoreLrgStraight}</td>
                 <td>40 points</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreYahtzee === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreYahtzee === 0) ? 'red':''}`}}>
                 {/* <td>{this.rollStatus.yahtzee ? 50 : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="yahtzee" data-name="scoreYahtzee" data-value={this.rollStatus.yahtzee ? 50 : 0} style={{backgroundColor:`${this.rollStatus.yahtzee ? '#0a0' : ''}`, color:`${this.rollStatus.yahtzee ? 'white': ''}`}}>YAHTZEE</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="yahtzee" data-name="scoreYahtzee" data-value={this.rollStatus.yahtzee ? 50 : 0} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.yahtzee ? '#0a0' : ''}`, color:`${this.rollStatus.yahtzee ? 'white': ''}`}}>YAHTZEE</td>
                 <td className="scoreColumn">{this.state.scoreYahtzee}</td>
                 <td>50 points (100 per additional)</td>
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreChance === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreChance === 0) ? 'red':''}`}}>
                 {/* <td>{rollTotal}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="chance" data-name="scoreChance" data-value={rollTotal} style={{backgroundColor:`${this.rollStatus.chance ? '#0a0' : ''}`, color:`${this.rollStatus.chance ? 'white': ''}`}}>Chance</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="chance" data-name="scoreChance" data-value={rollTotal} data-score={totalScore} style={{backgroundColor:`${this.rollStatus.chance ? '#0a0' : ''}`, color:`${this.rollStatus.chance ? 'white': ''}`}}>Chance</td>
                 <td className="scoreColumn">{this.state.scoreChance}</td>
                 <td>Total of all dice</td>
               </tr>
@@ -306,15 +362,33 @@ newGame() {
                 {/* <td></td> */}
                 <td>Total Score</td>
                 <td className="scoreColumn">{(totalScore > 0) ? totalScore : null}</td>
-                <td><button onClick={() => this.newGame()}>New Game</button></td>
+                <td>
+                  <button onClick={() => this.newGame()}>New Game</button>
+                  <button onClick={()=> this.setState({modalGetScoresVisible: true})}>High Scores</button>
+                  <button onClick={()=> this.setState({modalAddScoreVisible: true})}>add Scores</button>
+                </td>
               </tr>
             </tbody>
           </table>
+          <Modal id='HighScores'
+            isOpen={this.state.modalGetScoresVisible}
+            //onAfterOpen={()=>this.getHighScores()}
+            onRequestClose={()=>this.setState({modalGetScoresVisible: false})}
+            style={customStyles}
+          >
+            <HighScores scores={this.state.scoreBoard} refreshScores={this.getHighScores}/>
+            <button onClick={()=>this.setState({modalGetScoresVisible: false})}>close</button>
+          </Modal>
+          <Modal id='AddScore'
+            isOpen={this.state.modalAddScoreVisible}
+            onRequestClose={()=>this.setState({modalAddScoreVisible: false})}
+            style={customStyles}
+            >
+              <AddScore score={totalScore} showHighScores={this.handleShowHighScores} refreshScores={this.getHighScores}/>
+            <button onClick={()=>this.setState({modalAddScoreVisible: false})}>close</button>
 
-          {/* {hints.map((hint,i) => (
-            <div key={i}> {hint} </div>
-          ))}
-           */}
+          </Modal>
+
 
         </div>
       </>
