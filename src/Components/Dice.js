@@ -32,27 +32,27 @@ export default class Dice extends Component {
     
     
     if (this.state.gameOver === false){
-    // if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls per turn. \n You must score your dice in a category below to continue.')} 
-    //   else {
-      if (this.state.die1Locked === false ) { 
-        await this.setState({die1: Math.ceil(Math.random() * 6)});
+    if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls per turn. \n You must score your dice in a category below to continue.')} 
+      else {
+        if (this.state.die1Locked === false ) { 
+          await this.setState({die1: Math.ceil(Math.random() * 6)});
+        }
+        if (this.state.die2Locked === false ) { 
+          await this.setState({die2: Math.ceil(Math.random() * 6)});
+        }
+        if (this.state.die3Locked === false ) { 
+          await this.setState({die3: Math.ceil(Math.random() * 6)});
+        }
+        if (this.state.die4Locked === false ) { 
+          await this.setState({die4: Math.ceil(Math.random() * 6)});
+        }
+        if (this.state.die5Locked === false ) { 
+          await this.setState({die5: Math.ceil(Math.random() * 6)});
+        }
+        this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
+        this.setState({rollCount: parseInt([this.state.rollCount]) + 1 })
       }
-      if (this.state.die2Locked === false ) { 
-        await this.setState({die2: Math.ceil(Math.random() * 6)});
-      }
-      if (this.state.die3Locked === false ) { 
-        await this.setState({die3: Math.ceil(Math.random() * 6)});
-      }
-      if (this.state.die4Locked === false ) { 
-        await this.setState({die4: Math.ceil(Math.random() * 6)});
-      }
-      if (this.state.die5Locked === false ) { 
-        await this.setState({die5: Math.ceil(Math.random() * 6)});
-      }
-      this.setState({diceRoll: [this.state.die1, this.state.die2, this.state.die3, this.state.die4, this.state.die5]})
-      this.setState({rollCount: parseInt([this.state.rollCount]) + 1 })
-  //  }
-  }
+    }
   }
   clearRoll = async () => {
     await this.setState({
@@ -68,7 +68,6 @@ export default class Dice extends Component {
       die5Locked: false,  
       rollCount: 0, 
     })
-    //this.rollDice()
   }
   toggleGameOver = async (boolean) => {
    await this.setState({gameOver: boolean}) 
@@ -128,16 +127,15 @@ export default class Dice extends Component {
 
         
       </div>
-       <div 
-       className={this.state.rollCount === 1 ? 'firstRoll rollsRemaining':
-                  this.state.rollCount === 2 ? 'secondRoll rollsRemaining':
-                  this.state.rollCount === 3 ? 'lastRoll rollsRemaining' : 'preRoll rollsRemaining'
+      <div 
+        className={this.state.rollCount === 1 ? 'firstRoll rollsRemaining':
+                    this.state.rollCount === 2 ? 'secondRoll rollsRemaining':
+                    this.state.rollCount === 3 ? 'lastRoll rollsRemaining' : 'preRoll rollsRemaining'
       }> 
-       {/* insert ternary in className ie... className={(condition) ? 'class':'otherclass'} 
-      consider this idea for scorecard conditional formatting */}
-        {(this.state.rollCount === 1) ? 'Two rolls remaining.': 
-            (this.state.rollCount === 2) ? 'One roll remaining.': 
-            (this.state.rollCount === 3) ? 'Where would you like to score the roll?': 'Roll the dice to begin.'}
+        { (this.state.rollCount === 1) ? 'Two rolls remaining.': 
+          (this.state.rollCount === 2) ? 'One roll remaining.': 
+          (this.state.rollCount === 3) ? 'Where would you like to score the roll?': 'Roll the dice to begin.'
+        }
       </div>  
 
         <Scorecard roll={this.state.diceRoll} clearRoll={this.clearRoll} toggleGameOver={this.toggleGameOver}/>

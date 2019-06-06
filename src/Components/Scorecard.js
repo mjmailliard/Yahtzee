@@ -286,7 +286,7 @@ handleShowHighScores = async () => {
               </tr>
               <tr style={{textDecorationLine:`${(this.state.scoreOnes === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreOnes === 0) ? 'red':''}`}}>
                 {/* <td>{countsArray[1]}</td> */}
-                <td className='idColumn' onClick={(e) => this.scoreDiceRoll(e)} data-id="ones" data-pips='1' data-name="scoreOnes" data-value={countsArray[1]} data-score={totalScore} className={this.rollStatus.ones ? 'highlight' : ''}>Ones</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="ones" data-pips='1' data-name="scoreOnes" data-value={countsArray[1]} data-score={totalScore} className={this.rollStatus.ones ? 'highlight' : ''}>Ones</td>
                 <td className="scoreColumn">{this.state.scoreOnes}</td>
                 <td>Count and add only Ones</td>
               </tr>
