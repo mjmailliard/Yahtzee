@@ -11,7 +11,7 @@ export class HighScores extends Component {
   }
   
   componentDidMount = async () => {
-    console.log('high scores componentDidMount')
+    // console.log('high scores componentDidMount')
     await fetch('https://serene-wildwood-42273.herokuapp.com/')
     .then(data => data.json())
     .then(jsonData => this.setState({scores: jsonData[0]}))
@@ -20,11 +20,12 @@ export class HighScores extends Component {
   }
 
   async componentDidUpdate(prevProps, prevState){
-    console.log('high scores componentDidUpdate')
+    // console.log('high scores componentDidUpdate')
     if (this.props.scores[9].id !== prevProps.scores[9].id) {
-      console.log('props changed')
+      // console.log('props changed')
       await this.setState({scores:this.props.scores})
-    }console.log('props haven`t changed')
+    }
+    // console.log('props haven`t changed')
   }
 
   render() {

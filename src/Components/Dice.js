@@ -32,7 +32,7 @@ export default class Dice extends Component {
     
     
     if (this.state.gameOver === false){
-    // if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls. \n You must score your dice in a category below to continue.')} 
+    // if (this.state.rollCount === 3) {alert('Sorry, only 3 rolls per turn. \n You must score your dice in a category below to continue.')} 
     //   else {
       if (this.state.die1Locked === false ) { 
         await this.setState({die1: Math.ceil(Math.random() * 6)});
@@ -79,7 +79,7 @@ export default class Dice extends Component {
       <>
         <div className="diceContainer">
         <div>
-          <label>
+          <label className='cursorSelect'>
             <div className="dieSize">
               {this.state.die1}
             </div>
@@ -88,7 +88,7 @@ export default class Dice extends Component {
         </label>
         </div> 
         <div> 
-          <label>
+          <label className='cursorSelect' >
             <div className="dieSize">
               {this.state.die2}
             </div>
@@ -97,7 +97,7 @@ export default class Dice extends Component {
           </label>
      </div> 
         <div>
-          <label>
+          <label className='cursorSelect'>
             <div className="dieSize"> 
               {this.state.die3}
             </div>
@@ -106,7 +106,7 @@ export default class Dice extends Component {
           </label>
         </div>  
         <div>
-          <label>
+          <label className='cursorSelect'>
             <div className="dieSize">
               {this.state.die4}
             </div>
@@ -115,7 +115,7 @@ export default class Dice extends Component {
           </label>
       </div>  
         <div>
-        <label>
+        <label className='cursorSelect'>
             <div className="dieSize"> 
               {this.state.die5}
             </div>

@@ -22,7 +22,7 @@ height: 60px;
 border-radius: 3px;
 background-color: rgb(180, 180, 180);
 font-size: 1.25em;
-
+cursor: pointer;
 }
 .diceContainer {
   width: 500px;
@@ -64,9 +64,10 @@ td {
 }
 .scoreColumn{
   width: 35px;
-
 }
-
+.cursorSelect{
+  cursor: pointer;
+}
 .lock {
   height: 30px;
   width: 30px;
