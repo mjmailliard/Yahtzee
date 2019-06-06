@@ -128,7 +128,13 @@ export default class Dice extends Component {
 
         
       </div>
-       <div className="scorecard">
+       <div 
+       className={this.state.rollCount === 1 ? 'firstRoll rollsRemaining':
+                  this.state.rollCount === 2 ? 'secondRoll rollsRemaining':
+                  this.state.rollCount === 3 ? 'lastRoll rollsRemaining' : 'preRoll rollsRemaining'
+      }> 
+       {/* insert ternary in className ie... className={(condition) ? 'class':'otherclass'} 
+      consider this idea for scorecard conditional formatting */}
         {(this.state.rollCount === 1) ? 'Two rolls remaining.': 
             (this.state.rollCount === 2) ? 'One roll remaining.': 
             (this.state.rollCount === 3) ? 'Where would you like to score the roll?': 'Roll the dice to begin.'}

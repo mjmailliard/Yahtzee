@@ -26,7 +26,7 @@ color: rgb(0, 47, 92);
 
 button{
   text-align: center;
-  border-radius: 3px;
+  border-radius: 5px;
   background-color: rgb(0, 47, 92);
   color: white;
   cursor: pointer;
@@ -48,6 +48,31 @@ button{
   border-radius: 5px 5px 0px 0px
   
 }
+.preRoll{
+  background-color: white;
+  color: rgb(0, 47, 92)
+}
+.firstRoll{
+  background-color: #0a0;
+  color: white;
+}
+.secondRoll{
+  background-color: rgb(255, 251, 0);
+  color: rgb(0, 47, 92);
+}
+.lastRoll{
+  background-color: rgb(255, 136, 0);
+  color: white;}
+.rollsRemaining{
+  width: 500px;
+  text-align: center;
+  min-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 600;
+  height: 1.5em;
+  line-height: 1.5em;
+}
 .scorecard{
   width: 500px;
   text-align: center;
@@ -55,6 +80,14 @@ button{
   margin-left: auto;
   margin-right: auto;
   background-color: white;
+}
+.highlight{
+  background-color: #0a0;
+  color: white;
+  font-weight: 500;
+  border-radius: 25px;
+  box-shadow: 3px 3px 3px black;
+  cursor: pointer;
 }
 table{
   width: 99%;
@@ -183,6 +216,9 @@ form div textarea{
   .scorecard{
     width: 100%;
 
+  }
+  .rollsRemaining{
+    width: 100%;
   }
   .dieSize{
     height: 35px;
