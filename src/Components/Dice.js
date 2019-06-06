@@ -115,7 +115,7 @@ export default class Dice extends Component {
           </label>
       </div>  
         <div>
-        <label className='cursorSelect'>
+          <label className='cursorSelect'>
             <div className="dieSize"> 
               {this.state.die5}
             </div>

@@ -413,10 +413,11 @@ handleShowHighScores = async () => {
               </tr>
               <tr>
                 {/* <td></td> */}
-                <td>Total Score</td>
+                <td>Total<br/>Score</td>
                 <td className="scoreColumn">{(totalScore > 0) ? totalScore : null}</td>
-                <td>
+                <td className='btnContainer'>
                   <button onClick={() => this.newGame()}>New Game</button>
+                  <button onClick={()=> {}}>How to play</button>
                   <button onClick={()=> this.setState({modalGetScoresVisible: true})}>High Scores</button>
                   {/* <button onClick={()=> this.setState({modalAddScoreVisible: true})}>add Scores</button> */}
                 </td>
