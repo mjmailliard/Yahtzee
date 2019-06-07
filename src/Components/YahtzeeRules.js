@@ -23,8 +23,10 @@ export class YahtzeeRules extends Component {
               <ul>
                 <li>Save your score to a category by selecting the name of the roll on the scorecard. Ones, Twos, Full House, Yahtzee, etc. </li> 
                 <li>Every roll must be scored in either the upper or lower section.</li>
-                <li>If your roll does not match the category, then that category will receive a score of zero.</li>
-                <li>Scoring in this app is based on the offical rules distributed by Hasbro, including what's known as the Forced Joker rule. More on that below.</li>
+                <li>There is a hint above the scorecard that will appear when a lower section category matches your roll.</li>
+                <li>Each category that matches all or part of the current roll will also be highlighted to help identify scoring opportunities.  There may be multiple, so choose wisely!</li>
+                <li>If your roll does not match the category, then that category will receive a score of zero, and that turn is over.</li>
+                <li>Scoring is based on the offical rules distributed by Hasbro, including what's known as the Forced Joker rule. More on that below.</li>
               </ul>
               <h3>Upper Section</h3>
                 <ul>
@@ -50,14 +52,14 @@ export class YahtzeeRules extends Component {
               <h3>Yahtzee</h3>
                 <label>*Rolling multiple Yahtzees in a single game has some unique quirks that can be difficult to follow.</label>
                 <ul>
-                  <li>Multiple Yahtzees
+                  <li><b>Multiple Yahtzees</b>
                     <ul>
                       <li>The first Yahtzee <b><i>scored in the Yahtzee category</i></b> is worth 50 points.</li>
                       <li>Additional Yahtzees scored after that automatically receive a <b>Yahtzee Bonus</b> of 100 points and may be scored according to the <b>Joker Rule</b> for additional points.</li>
                       <li>If you previously scored a roll of 0 in the Yahtzee category, then you are no longer eligible for the Yahtzee Bonus that game.</li>
                     </ul>
                   </li>
-                  <li>Forced Joker Rule
+                  <li><b>Forced Joker Rule</b>
                     <ul>
                       <li>If your Yahtzee category has already been filled in (either 0 points or 50 points), then a Yahtzee may be used as a wild card, based on the following rules: </li>
                     <li>If the corresponding upper section box is unused then that category must be used first, scoring a total of all 5 dice.</li>
