@@ -2,26 +2,28 @@ import React, { Component } from 'react'
 import '../App.css'
 
 export default class Die extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
-      dieRoll: '',
+      dieValue: this.props.pips,
     }
   }
 
-  rollDie() {
-
-    this.setState({dieRoll: Math.ceil(Math.random() * 6)});
+  componentDidUpdate(prevProps, prevState){
+    // console.log('scorecard didUpdate')
+    if (this.props.pips !== prevProps.pips){
+      this.setState({dieValue:this.props.pips})
+    }
   }
    
   render() {
     return (
-      <div>
+      <>
         <div className="dieSize">
-          {this.state.dieRoll}
+          {this.state.dieValue}
         </div>
-        <button onClick={()=> this.rollDie()}> roll </button>
-      </div>
+
+      </>
     )
   }
 }

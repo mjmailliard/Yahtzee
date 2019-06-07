@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Scorecard from './Scorecard';
 import unLocked from '../Assets/lockOpen.png'
 import locked from '../Assets/lockClosed.png'
+import Die from '../Components/Die'
 
 export default class Dice extends Component {
   constructor(props){
@@ -78,6 +79,7 @@ export default class Dice extends Component {
       <>
         <div className="diceContainer">
         <div>
+          {/* <Die pips={this.state.die1}/> */}
           <label className='cursorSelect'>
             <div className="dieSize">
               {this.state.die1}
