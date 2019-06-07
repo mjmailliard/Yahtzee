@@ -21,7 +21,7 @@ export class HighScores extends Component {
 
   async componentDidUpdate(prevProps, prevState){
     // console.log('high scores componentDidUpdate')
-    if (this.props.scores[9].id !== prevProps.scores[9].id) {
+    if (this.props.scores[14].id !== prevProps.scores[14].id) {
       // console.log('props changed')
       await this.setState({scores:this.props.scores})
     }
