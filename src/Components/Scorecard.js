@@ -68,11 +68,11 @@ componentDidUpdate(prevProps, prevState){
 async scoreDiceRoll(event) {
   event.persist()
   const endRoll = async () => {
-    await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
+    // await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
     await this.setState({turnCount: this.state.turnCount + 1})
     await this.setState({scoreYahtzee: this.state.scoreYahtzee + 100})
-    this.props.clearRoll()
-    this.setState({diceRoll: [0]})  
+    await this.props.clearRoll()
+    await this.setState({diceRoll: [0]})  
   }
 //this will catch additional yahtzee rolls
   if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50){
@@ -117,22 +117,22 @@ async scoreDiceRoll(event) {
         } else {
           await this.setState({
             [event.target.dataset.name]: parseInt(event.target.dataset.value),
-            diceRoll: ['']
+            diceRoll: [0]
           })
          await endRoll() 
         }
       }
     } 
-  } else {
-  if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1){
-    await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
-   }
+  } else { //regular scoring follows:
+  // if(this.countsArrayCopy.findIndex((n) => n > 4) !== -1){
+  //   await this.setState({yahtzeeCount: this.state.yahtzeeCount + 1})
+  //  }
   if(this.state.diceRoll.length > 1){
     if(this.rollStatus[event.target.dataset.id] === true) {
       if (this.state[event.target.dataset.name] === null) {
         await this.setState({
           [event.target.dataset.name]: parseInt(event.target.dataset.value),
-          diceRoll: ['']
+          diceRoll: [0]
         })
         await this.setState({turnCount: this.state.turnCount + 1})
         this.props.clearRoll()
@@ -262,12 +262,7 @@ handleShowHighScores = async () => {
       
     if (countsArray.findIndex((n) => n > 4) !== -1 && this.state.scoreYahtzee >= 50) {
       hints = 'Another Yahtzee and 100 bonus points!'
-      // if (){
-        //check if corresponding upper section is null
-        //  if yes, highlight only upper section
-        //if no, highlight all lower sections that are not null
-      // }
-      
+
     }
     if (this.state.scoreChance === null && this.state.diceRoll.length > 1){
       this.rollStatus.chance = true }
@@ -288,39 +283,39 @@ handleShowHighScores = async () => {
                 <td style={{borderWidth: '0'}}>This Roll: {rollTotal}</td>
                 <td className="hints" colSpan='2' style={{borderWidth: '0', color:`${hints.length > 0 || this.state.gameOver != null ? '#0a0': ''}`}}>{hints}{this.state.gameOver}</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreOnes === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreOnes === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreOnes === 0 ? 'crossedOut' : this.state.scoreOnes > 0 ? 'scored' : ''}>
                 {/* <td>{countsArray[1]}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="ones" data-pips='1' data-name="scoreOnes" data-value={countsArray[1]} data-score={totalScore} className={this.rollStatus.ones ? 'highlight' : 'noHighlight'}>Ones</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="ones" data-pips='1' data-name="scoreOnes" data-value={countsArray[1]} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreOnes === 0 || this.state.scoreOnes > 0) ? 'scored': (this.rollStatus.ones) ? 'highlight' : 'noHighlight'}>Ones</td>
                 <td className="scoreColumn">{this.state.scoreOnes}</td>
                 <td>Count and add only Ones</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreTwos === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreTwos === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreTwos === 0 ? 'crossedOut' : this.state.scoreTwos > 0 ? 'scored' : ''}>
                 {/* <td>{countsArray[2] * 2}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="twos" data-pips='2' data-name="scoreTwos" data-value={countsArray[2] * 2} data-score={totalScore} className={this.rollStatus.twos ? 'highlight' : 'noHighlight'}>Twos</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="twos" data-pips='2' data-name="scoreTwos" data-value={countsArray[2] * 2} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreTwos === 0 || this.state.scoreTwos > 0 ) ? 'scored': (this.rollStatus.twos) ? 'highlight' : 'noHighlight'}>Twos</td>
                 <td className="scoreColumn">{this.state.scoreTwos}</td>
                 <td>Count and add only Twos</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreThrees === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreThrees === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreThrees === 0 ? 'crossedOut' : this.state.scoreThrees > 0 ? 'scored' : ''}>
                 {/* <td>{countsArray[3] * 3}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="threes" data-pips='3' data-name="scoreThrees" data-value={countsArray[3] * 3} data-score={totalScore} className={this.rollStatus.threes ? 'highlight' : 'noHighlight'}>Threes</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="threes" data-pips='3' data-name="scoreThrees" data-value={countsArray[3] * 3} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreThrees === 0 || this.state.scoreThrees > 0 ) ? 'scored': (this.rollStatus.threes) ? 'highlight' : 'noHighlight'}>Threes</td>
                 <td className="scoreColumn">{this.state.scoreThrees}</td>
                 <td>Count and add only Threes</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreFours === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreFours === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreFours === 0 ? 'crossedOut' : this.state.scoreFours > 0 ? 'scored' : ''}>
                 {/* <td>{countsArray[4] * 4}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fours" data-pips='4' data-name="scoreFours" data-value={countsArray[4] * 4} data-score={totalScore} className={this.rollStatus.fours ? 'highlight' : 'noHighlight'}>Fours</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fours" data-pips='4' data-name="scoreFours" data-value={countsArray[4] * 4} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreFours === 0 || this.state.scoreFours > 0 ) ? 'scored' : (this.rollStatus.fours) ? 'highlight' : 'noHighlight'}>Fours</td>
                 <td className="scoreColumn">{this.state.scoreFours}</td>
                 <td>Count and add only Fours</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreFives === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreFives === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreFives === 0 ? 'crossedOut' : this.state.scoreFives > 0 ? 'scored' : ''}>
                 {/* <td>{countsArray[5] * 5}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fives" data-pips='5' data-name="scoreFives" data-value={countsArray[5] * 5} data-score={totalScore} className={this.rollStatus.fives ? 'highlight' : 'noHighlight'}>Fives</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fives" data-pips='5' data-name="scoreFives" data-value={countsArray[5] * 5} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreFives === 0 || this.state.scoreFives > 0 ) ? 'scored' : (this.rollStatus.fives) ? 'highlight' : 'noHighlight'}>Fives</td>
                 <td className="scoreColumn">{this.state.scoreFives}</td>
                 <td>Count and add only Fives</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreSixes === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreSixes === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreSixes === 0 ? 'crossedOut' : this.state.scoreSixes > 0 ? 'scored' : ''}>
                 {/* <td>{countsArray[6] * 6}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="sixes" data-pips='6' data-name="scoreSixes" data-value={countsArray[6] * 6} data-score={totalScore} className={this.rollStatus.sixes ? 'highlight' : 'noHighlight'}>Sixes</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="sixes" data-pips='6' data-name="scoreSixes" data-value={countsArray[6] * 6} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreSixes === 0 || this.state.scoreSixes > 0 ) ? 'scored' : (this.rollStatus.sixes) ? 'highlight' : 'noHighlight'}>Sixes</td>
                 <td className="scoreColumn">{this.state.scoreSixes}</td>
                 <td>Count and add only Sixes</td>
               </tr>
@@ -336,45 +331,45 @@ handleShowHighScores = async () => {
                 <td className="scoreColumn">{scoreBonus}</td>
                 <td>35 bonus points if total of upper section is 63 or more.</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreThreeOfAKind === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreThreeOfAKind === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreThreeOfAKind === 0 ? 'crossedOut' : this.state.scoreThreeOfAKind > 0 ? 'scored' : ''}>
                 {/* <td>{this.rollStatus.threeOfAKind ? rollTotal : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="threeOfAKind" data-name="scoreThreeOfAKind" data-value={rollTotal} data-score={totalScore} className={this.rollStatus.threeOfAKind ? 'highlight' : 'noHighlight'}>3 of a kind</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="threeOfAKind" data-name="scoreThreeOfAKind" data-value={rollTotal} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreThreeOfAKind === 0 || this.state.scoreThreeOfAKind > 0 ) ? 'scored': (this.rollStatus.threeOfAKind) ? 'highlight' : 'noHighlight'}>3 of a kind</td>
                 <td className="scoreColumn">{this.state.scoreThreeOfAKind}</td>
                 <td>Total of all dice</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreFourOfAKind === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreFourOfAKind === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreFourOfAKind === 0 ? 'crossedOut' : this.state.scoreFourOfAKind > 0 ? 'scored' : ''}>
                 {/* <td>{this.rollStatus.fourOfAKind ? rollTotal : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fourOfAKind" data-name="scoreFourOfAKind" data-value={rollTotal} data-score={totalScore} className={this.rollStatus.fourOfAKind ? 'highlight' : 'noHighlight'}>4 of a kind</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fourOfAKind" data-name="scoreFourOfAKind" data-value={rollTotal} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreFourOfAKind === 0 || this.state.scoreFourOfAKind > 0 ) ? 'scored': (this.rollStatus.fourOfAKind) ? 'highlight' : 'noHighlight'}>4 of a kind</td>
                 <td className="scoreColumn">{this.state.scoreFourOfAKind}</td>
                 <td>Total of all dice</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreFullHouse === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreFullHouse === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreFullHouse === 0 ? 'crossedOut' : this.state.scoreFullHouse > 0 ? 'scored' : ''}>
                 {/* <td>{this.rollStatus.fullHouse ? 25 : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fullHouse" data-name="scoreFullHouse" data-value={this.rollStatus.fullHouse ? 25 : 0} data-score={totalScore} className={this.rollStatus.fullHouse ? 'highlight' : 'noHighlight'}>Full House</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="fullHouse" data-name="scoreFullHouse" data-value={this.rollStatus.fullHouse ? 25 : 0} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreFullHouse === 0 || this.state.scoreFullHouse > 0 ) ? 'scored': (this.rollStatus.fullHouse) ? 'highlight' : 'noHighlight'}>Full House</td>
                 <td className="scoreColumn">{this.state.scoreFullHouse}</td>
                 <td>25 points</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreSmStraight === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreSmStraight === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreSmStraight === 0 ? 'crossedOut' : this.state.scoreSmStraight > 0 ? 'scored' : ''}>
                 {/* <td>{this.rollStatus.smallStraight ? 30 : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="smallStraight" data-name="scoreSmStraight" data-value={this.rollStatus.smallStraight ? 30 : 0} data-score={totalScore} className={this.rollStatus.smallStraight ? 'highlight' : 'noHighlight'}>Small Straight</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="smallStraight" data-name="scoreSmStraight" data-value={this.rollStatus.smallStraight ? 30 : 0} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreSmStraight === 0 || this.state.scoreSmStraight > 0 ) ? 'scored': (this.rollStatus.smallStraight) ? 'highlight' : 'noHighlight'}>Small Straight</td>
                 <td className="scoreColumn">{this.state.scoreSmStraight}</td>
                 <td>30 points</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreLrgStraight === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreLrgStraight === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreLrgStraight === 0 ? 'crossedOut' : this.state.scoreLrgStraight > 0 ? 'scored' : ''}>
                 {/* <td>{this.rollStatus.largeStraight ? 40 : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="largeStraight" data-name="scoreLrgStraight" data-value={this.rollStatus.largeStraight ? 40 : 0} data-score={totalScore} className={this.rollStatus.largeStraight ? 'highlight' : 'noHighlight'}>Large Straight</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="largeStraight" data-name="scoreLrgStraight" data-value={this.rollStatus.largeStraight ? 40 : 0} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreLrgStraight === 0 || this.state.scoreLrgStraight > 0 ) ? 'scored': (this.rollStatus.largeStraight) ? 'highlight' : 'noHighlight'}>Large Straight</td>
                 <td className="scoreColumn">{this.state.scoreLrgStraight}</td>
                 <td>40 points</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreYahtzee === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreYahtzee === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreYahtzee === 0 ? 'crossedOut' : this.state.scoreYahtzee > 0 ? 'scored' : ''}>
                 {/* <td>{this.rollStatus.yahtzee ? 50 : 0}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="yahtzee" data-name="scoreYahtzee" data-value={this.rollStatus.yahtzee ? 50 : 0} data-score={totalScore} className={this.rollStatus.yahtzee ? 'highlight' : 'noHighlight'}>YAHTZEE</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="yahtzee" data-name="scoreYahtzee" data-value={this.rollStatus.yahtzee ? 50 : 0} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreYahtzee === 0 || this.state.scoreYahtzee > 0 ) ? 'scored': (this.rollStatus.yahtzee) ? 'highlight' : 'noHighlight'}>YAHTZEE</td>
                 <td className="scoreColumn">{this.state.scoreYahtzee}</td>
                 <td>50 points (100 per additional)</td>
               </tr>
-              <tr style={{textDecorationLine:`${(this.state.scoreChance === 0) ? 'line-through':''}`,textDecorationColor:`${(this.state.scoreChance === 0) ? 'red':''}`}}>
+              <tr className={this.state.scoreChance === 0 ? 'crossedOut' : this.state.scoreChance > 0 ? 'scored' : ''}>
                 {/* <td>{rollTotal}</td> */}
-                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="chance" data-name="scoreChance" data-value={rollTotal} data-score={totalScore} className={this.rollStatus.chance ? 'highlight' : 'noHighlight'}>Chance</td>
+                <td onClick={(e) => this.scoreDiceRoll(e)} data-id="chance" data-name="scoreChance" data-value={rollTotal} data-score={totalScore} className={(rollTotal < 5 ) ? '' :(this.state.scoreChance === 0 || this.state.scoreChance > 0 ) ? 'scored': (this.rollStatus.chance) ? 'highlight' : 'noHighlight'}>Chance</td>
                 <td className="scoreColumn">{this.state.scoreChance}</td>
                 <td>Total of all dice</td>
               </tr>

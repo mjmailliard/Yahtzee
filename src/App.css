@@ -108,11 +108,40 @@ h1{
   border-radius: 25px;
   box-shadow: 3px 3px 3px black;
   cursor: pointer;
+  font-weight: 600;
+}
+.highlight:hover{
+  font-style: oblique;
+  background-color: rgb(0, 114, 0);
+  cursor: pointer;
+
 }
 .noHighlight{
   border-radius: 0px;
   cursor: pointer;
+  color: rgb(180, 0, 0);
+  font-weight: 500;
 }
+.noHighlight:hover{
+  text-decoration-line: line-through;
+  font-style: oblique;
+  color: rgb(180,0,0);
+  border-radius: 0px;
+
+
+}
+.crossedOut{
+  text-decoration-line: line-through;
+  font-style: oblique;
+  color: rgba(0, 48, 92, 0.5);  
+
+
+}
+.scored{
+  color: rgba(0, 48, 92, 0.5);  
+
+}
+
 table{
   width: 99%;
   margin: auto;
@@ -131,6 +160,7 @@ td {
 }
 .scoreColumn{
   width: 35px;
+  border-radius: 0px;
 }
 .cursorSelect{
   cursor: pointer;

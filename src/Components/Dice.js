@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Scorecard from './Scorecard';
 import unLocked from '../Assets/lockOpen.png'
 import locked from '../Assets/lockClosed.png'
-import Die from '../Components/Die'
+// import Die from '../Components/Die'
 
 export default class Dice extends Component {
   constructor(props){
@@ -18,7 +18,7 @@ export default class Dice extends Component {
       die3Locked: false,
       die4Locked: false,
       die5Locked: false,
-      diceRoll: [],
+      diceRoll: [0],
       rollCount: 0,
       gameOver: false,
     }
