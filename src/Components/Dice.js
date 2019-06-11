@@ -78,7 +78,7 @@ export default class Dice extends Component {
     return(
       <>
         <div className="diceContainer">
-        <div>
+        <div className='dieBox'>
           {/* <Die pips={this.state.die1}/> */}
           <label className='cursorSelect'>
             <div className="dieSize">
@@ -88,7 +88,7 @@ export default class Dice extends Component {
             <input hidden type="checkbox" checked={this.state.die1Locked} onChange={e => this.setState(prevState => ({die1Locked: !prevState.die1Locked}))} id='die1' name='die1' value='locked'/>
         </label>
         </div> 
-        <div> 
+        <div className='dieBox'> 
           <label className='cursorSelect' >
             <div className="dieSize">
               {this.state.die2}
@@ -97,7 +97,7 @@ export default class Dice extends Component {
             <input hidden type="checkbox" id='die2' name='die2' checked={this.state.die2Locked} onChange={e => this.setState(prevState => ({die2Locked: !prevState.die2Locked}))}/>
           </label>
      </div> 
-        <div>
+        <div className='dieBox'>
           <label className='cursorSelect'>
             <div className="dieSize"> 
               {this.state.die3}
@@ -106,7 +106,7 @@ export default class Dice extends Component {
             <input hidden type="checkbox" id='die3' name='die3' checked={this.state.die3Locked} onChange={e => this.setState(prevState => ({die3Locked: !prevState.die3Locked}))}/>
           </label>
         </div>  
-        <div>
+        <div className='dieBox'>
           <label className='cursorSelect'>
             <div className="dieSize">
               {this.state.die4}
@@ -115,7 +115,7 @@ export default class Dice extends Component {
             <input hidden type="checkbox" id='die4' name='die4' checked={this.state.die4Locked} onChange={e => this.setState(prevState => ({die4Locked: !prevState.die4Locked}))}/>
           </label>
       </div>  
-        <div>
+        <div className='dieBox'>
           <label className='cursorSelect'>
             <div className="dieSize"> 
               {this.state.die5}
@@ -124,9 +124,9 @@ export default class Dice extends Component {
             <input hidden type="checkbox" id='die5' name='die5' checked={this.state.die5Locked} onChange={e => this.setState(prevState => ({die5Locked: !prevState.die5Locked}))}/>
           </label>
         </div>
-        
-       <button className="btnRollDice" onClick={()=> this.rollDice()}> Roll Dice </button>
-
+        <div className='dieBox'>
+        <button className="btnRollDice" onClick={()=> this.rollDice()}> Roll Dice </button>
+        </div>
         
       </div>
       <div 

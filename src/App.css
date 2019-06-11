@@ -11,10 +11,42 @@
   width: 45px;
   border: 1px solid black;
   border-radius: 5px;
-  margin: 5px; 
+  /* margin: 5px;  */
   background-color: rgb(245, 245, 245); 
   font-size: 2em;
 
+}
+.diceContainer {
+  width: 500px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  min-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(0, 47, 92);
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 5px 5px 0px 0px;
+
+}
+.dieBox{
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-items: center;
+  /* height: 100%;
+  width: 100%; */
+  
+}
+.dieBox label{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 .btnRollDice{
 width: 70px;
@@ -54,20 +86,7 @@ h1{
   padding: 0px;
   font-weight: 500
 }
-.diceContainer {
-  width: 500px;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  min-width: 320px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: rgb(0, 47, 92);
-  justify-content: space-around;
-  align-items: center;
-  border-radius: 5px 5px 0px 0px
-  
-}
+
 .preRoll{
   background-color: white;
   color: rgb(0, 47, 92)
@@ -221,7 +240,7 @@ th{
 form {
   border-radius: 5px;
   text-align: center;
-  width: 100;
+  width: 100%;
   margin: auto;
   color: white;
 }
@@ -256,11 +275,96 @@ form div textarea{
 }
 .rules{
   background-color: rgb(250, 250, 250);
-  width: 400px;
+  width: 80%;
   margin: auto;
   color:  rgb(0, 47, 92);
   padding: 1px;
 }
+@media ( max-width: 800px) and (min-width: 481px) {
+  .mainDiv {
+    padding-top: 0px;
+  }
+
+  .diceContainer {
+    width: 100%;
+    height: 140px;
+    border-radius: 0px;
+  }
+  .dieSize{
+    height: 60px;
+    width: 60px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(245, 245, 245); 
+    font-size: 2em;
+    line-height: 1em;
+    /* padding: auto ; */
+  
+  }
+  .btnRollDice{
+    width: 90px;
+    height: 80px;
+    font-size: 2em; 
+    text-align: center;
+  }
+  .lock {
+    margin-top: 10px;
+    height: 40px;
+    width: 40px;
+  
+  }
+  .scorecard{
+    width: 100%;
+    font-size: 1.7em;
+  }  
+   .rollsRemaining{
+    width: 100%;
+    font-size: 1.75em;
+  } 
+
+  button{
+    width: 30%;
+    height: 1.7em;
+    text-align: center;
+    padding: 2px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+
+  } 
+
+  td {
+    height: 38px;
+  }
+  .rules{
+    width: 90%;
+  } 
+  .name{
+    height: 2em;
+  }
+  .score{
+    height: 2em;
+  }
+  .taunt{
+    height: 2em;
+  }  
+  form div input{
+    font-size: 2.5em;
+    line-height: 2em;
+  
+  }
+  form div textarea{
+    margin-top: 10px;
+    font-size: 2.2em;
+    line-height: 2em;
+
+  }
+  [type=submit]{
+    margin-top: 10px;
+    line-height: 2em;
+    font-size: 2em;
+  }
+}
+
 @media (max-width: 480px) { 
   .mainDiv {
     padding-top: 0px;

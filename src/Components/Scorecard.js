@@ -15,6 +15,7 @@ const customStyles = {
     backgroundColor       : 'rgb(0, 47, 92)',
     height                : '65%',
     overflow              : 'scroll',
+    width : '90%',
   }
 }
 Modal.setAppElement('#root')
