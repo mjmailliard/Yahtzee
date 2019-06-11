@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Scorecard from './Scorecard';
 import unLocked from '../Assets/lockOpen.png'
 import locked from '../Assets/lockClosed.png'
-// import Die from '../Components/Die'
+import Die from '../Components/Die'
 
 export default class Dice extends Component {
   constructor(props){
@@ -79,10 +79,11 @@ export default class Dice extends Component {
       <>
         <div className="diceContainer">
         <div className='dieBox'>
-          {/* <Die pips={this.state.die1}/> */}
+          
           <label className='cursorSelect'>
             <div className="dieSize">
-              {this.state.die1}
+              {/* {this.state.die1} */}
+              <Die pips={this.state.die1}/>
             </div>
             <img className="lock" src={this.state.die1Locked ? locked:unLocked} alt={this.state.die1Locked ? 'Die 1 is locked':'Die 1 is unLocked'}/>
             <input hidden type="checkbox" checked={this.state.die1Locked} onChange={e => this.setState(prevState => ({die1Locked: !prevState.die1Locked}))} id='die1' name='die1' value='locked'/>
@@ -91,7 +92,8 @@ export default class Dice extends Component {
         <div className='dieBox'> 
           <label className='cursorSelect' >
             <div className="dieSize">
-              {this.state.die2}
+              {/* {this.state.die2} */}
+              <Die pips={this.state.die2}/>
             </div>
             <img className="lock" src={this.state.die2Locked ? locked:unLocked} alt={this.state.die2Locked ? 'Die 2 is locked':'Die 2 is unLocked'}/>
             <input hidden type="checkbox" id='die2' name='die2' checked={this.state.die2Locked} onChange={e => this.setState(prevState => ({die2Locked: !prevState.die2Locked}))}/>
@@ -100,7 +102,8 @@ export default class Dice extends Component {
         <div className='dieBox'>
           <label className='cursorSelect'>
             <div className="dieSize"> 
-              {this.state.die3}
+              {/* {this.state.die3} */}
+              <Die pips={this.state.die3}/>
             </div>
             <img className="lock" src={this.state.die3Locked ? locked:unLocked} alt={this.state.die3Locked ? 'Die 3 is locked':'Die 3 is unLocked'}/>
             <input hidden type="checkbox" id='die3' name='die3' checked={this.state.die3Locked} onChange={e => this.setState(prevState => ({die3Locked: !prevState.die3Locked}))}/>
@@ -109,7 +112,8 @@ export default class Dice extends Component {
         <div className='dieBox'>
           <label className='cursorSelect'>
             <div className="dieSize">
-              {this.state.die4}
+              {/* {this.state.die4} */}
+              <Die pips={this.state.die4}/>
             </div>
             <img className="lock" src={this.state.die4Locked ? locked:unLocked} alt={this.state.die4Locked ? 'Die 4 is locked':'Die 4 is unLocked'}/>
             <input hidden type="checkbox" id='die4' name='die4' checked={this.state.die4Locked} onChange={e => this.setState(prevState => ({die4Locked: !prevState.die4Locked}))}/>
@@ -118,7 +122,8 @@ export default class Dice extends Component {
         <div className='dieBox'>
           <label className='cursorSelect'>
             <div className="dieSize"> 
-              {this.state.die5}
+              {/* {this.state.die5} */}
+              <Die pips={this.state.die5}/>
             </div>
             <img className="lock" src={this.state.die5Locked ? locked:unLocked} alt={this.state.die5Locked ? 'Die 5 is locked':'Die 5 is unLocked'}/>
             <input hidden type="checkbox" id='die5' name='die5' checked={this.state.die5Locked} onChange={e => this.setState(prevState => ({die5Locked: !prevState.die5Locked}))}/>
