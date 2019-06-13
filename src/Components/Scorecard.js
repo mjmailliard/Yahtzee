@@ -385,6 +385,12 @@ handleShowHighScores = async () => {
                   {/* <button onClick={()=> this.setState({modalAddScoreVisible: true})}>add Scores</button> */}
                 </td>
               </tr>
+              <tr>
+                <td colSpan='3'>
+                  Created by Mike! <br/>
+                  Learn more at <a href="http://mike.mailliard.net" target="blank" rel="noopener noreferrer">mike.mailliard.net</a>
+                </td>
+              </tr>
             </tbody>
           </table>
           <Modal id='HowToPlay'
