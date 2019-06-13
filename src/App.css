@@ -14,6 +14,12 @@
   /* margin: 5px;  */
   background-color: rgb(245, 245, 245); 
   font-size: 2em;
+
+  animation-name: dieRollAnimation;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  transform-origin: initial;
 }
 .pip{
   display: block;
@@ -112,6 +118,22 @@
   /* height: 100%;
   width: 100%; */
   
+}
+@keyframes dieRollAnimation { 
+  0%{
+    transform: rotate(-45deg) scale(.8)
+  }
+  20%{
+    transform: rotate(45deg) scale(1)
+  }
+  40%{
+    transform: rotate(45deg)
+  }
+  60%{
+    transform: rotate(-45deg)
+  }
+  100%{  
+  }
 }
 .dieBox label{
   display: flex;
@@ -363,7 +385,7 @@ form div textarea{
 
   .diceContainer {
     width: 100%;
-    height: 140px;
+    height: 135px;
     border-radius: 0px;
   }
   .pip{
@@ -397,7 +419,7 @@ form div textarea{
   }
   .scorecard{
     width: 100%;
-    font-size: 1.7em;
+    font-size: 1.6em;
   }  
    .rollsRemaining{
     width: 100%;
